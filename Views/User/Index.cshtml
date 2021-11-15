@@ -1,0 +1,80 @@
+﻿@using LoginManagemet.DataContext.DTOs
+@model IEnumerable<UserDTO>
+@{
+    ViewData["Title"] = "Index";
+    string roleAccess = ViewBag.SecurityAccess;   
+    
+}
+
+<div class="rowIndex">
+    <div>
+        <a class="btn btn-primary" href="~/User/Add">Add User</a>
+    </div>
+</div>
+
+<div class="divisor"></div>
+
+<br />
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.AccountName)</th>
+            <th>@Html.DisplayNameFor(model => model.Name)</th>
+            <th>@Html.DisplayNameFor(model => model.Email)</th>
+            <th>@Html.DisplayNameFor(model => model.RoleName)</th>
+            <th> Actions </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (UserDTO user in Model)
+        {
+            <tr>
+                <td> @user.AccountName</td>
+                <td> @user.CompleteName()</td>
+                <td> @user.Email</td>
+                <td> @user.RoleName</td>
+                <td>
+                    <button onclick="DeleteUserFunc(@user.Id)" class="btn btn-danger"> Delete </button>
+                    @Html.ActionLink(linkText: "Edit", actionName: "goModify", controllerName: "User", routeValues: new { id = user.Id }, htmlAttributes: null)
+                </td>
+
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+<script src="~/js/sweetalert2.js"></script>
+
+<script>
+    var RootUrl = '@Url.Content("~/")';
+
+    function DeleteUserFunc(Id) {
+        var obj = { "Id": Id };
+        LoadGeneric('User/DeleteUser', obj);
+
+    }
+
+    function LoadGeneric(method, obj) {
+        $.ajax({
+            url: RootUrl + method,
+            data: obj,
+            type: 'post',
+            cache: false,
+            success: function (data) {                
+                aler("Successful Operation!");
+            }
+        });
+    }
+
+
+</script>
+
+
+
+
+
+
+

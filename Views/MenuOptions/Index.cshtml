@@ -1,0 +1,103 @@
+﻿@using LoginManagemet.DataContext.DTOs
+@model IEnumerable<MenuOptionDTO>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<style>
+    #alignright {
+        margin-left: auto;
+        color: #fff;
+        vertical-align: central;
+    }
+</style>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ASP.NET Challenge</title>
+    <link rel="stylesheet" href="~/css/style.css">
+
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+    <script>
+        var message = '@ViewBag.Welcome'
+        
+        $(document).ready(function () {
+            alert("Welcome " + message +"! Please explore the functionality and take a time to see the code!" );
+        });
+
+    </script>
+
+
+
+
+
+
+</head>
+
+<body>
+    <header>
+        <nav id='cssmenu'>
+            <div class="logo">
+                <a href='~/MenuOptions/Index'> Account Management </a>
+            </div>
+            <div id="head-mobile"></div>
+            <div class="button"></div>
+            <ul>
+                @{
+                    foreach (MenuOptionDTO option in Model)
+                    {
+                        <li>
+                            <a href='@option.Reference'>@option.Name</a>
+                            @{
+                                Convert.ToInt32(option.Id);
+                            }
+                            <ul>
+                                @{
+                                    foreach (MenuSubcategoryDTO subcategory in option.MenuSubcategories)
+                                    {
+                                        <li>
+                                            <a href='@subcategory.Reference'>@subcategory.Name</a>
+                                            @{
+                                                Convert.ToInt32(subcategory.Id);
+                                            }
+                                            <ul>
+                                                @{
+                                                    foreach (ChildSubMenuDTO child in subcategory.ChildSubMenu)
+                                                    {
+                                                        <li><a href='@child.Reference'>@child.Description</a></li>
+                                                    } }
+                                            </ul>
+                                        </li>
+                                    } }
+                            </ul>
+                        </li>
+                    } }
+
+                <li id="alignright">
+                    <a class="nav-link text-white" asp-area="" asp-controller="Login" asp-action="LogOut"> Log Out </a>
+                </li>
+            </ul>
+        </nav>
+
+    </header>
+    <section style='padding-top: 20px; color: white;'>
+    </section>
+
+    @section Scripts
+    {
+        <script src="~/js/jquery-1.10.2.min.js"></script>
+        <script src="~/js/index.js"></script>
+
+
+    }
+
+
+</body>
+
+</html>
+

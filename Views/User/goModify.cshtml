@@ -1,0 +1,110 @@
+﻿
+@model LoginManagemet.DataContext.DTOs.UserDTO
+
+@{
+    ViewBag.Title = "Update User Info";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Modify", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <hr />
+    <div class="form-group">
+        @Html.LabelFor(m => m.AccountName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.AccountName, new { @class = "form-control", @readonly = "true" })
+            <span asp-validation-for="AccountName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Surname, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Surname, new { @class = "form-control" })
+            <span asp-validation-for="Surname" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10" >
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @readonly = "true" })
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10" id="show_hide_password">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control txtPss" })
+            <span class="input-group-addon">
+                <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+            </span>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10" id="show_hide_password">
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control txtPss" })
+            <span class="input-group-addon">
+                <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+            </span>
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.UserRoles, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownList("UserRoles",
+                     new SelectList(ViewBag.roles, "Value", "Text"),
+                     new
+                     {
+                         @style = "width: 280px",
+                         multiple = ""
+                     })
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Edit" asp-action="Modify" asp-controller="User" />
+        <input type="submit" class="btn btn-danger" value="Cancel" asp-action="Index" asp-controller="User" />
+    </div>
+}
+
+@section Scripts {
+    <script src="~/js/bundles.min.js"></script>
+    <script src="~/js/site.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery/dist/jqueryvalidate.js"></script>
+
+    <script>
+        $("#UserRoles").chosen();
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#show_hide_password a").on('click', function (event) {
+                event.preventDefault();
+                if ($('#show_hide_password input').attr("type") == "text") {
+                    $('#show_hide_password input').attr('type', 'password');
+                    $('#show_hide_password i').addClass("fa-eye-slash");
+                    $('#show_hide_password i').removeClass("fa-eye");
+                } else if ($('#show_hide_password input').attr("type") == "password") {
+                    $('#show_hide_password input').attr('type', 'text');
+                    $('#show_hide_password i').removeClass("fa-eye-slash");
+                    $('#show_hide_password i').addClass("fa-eye");
+                }
+            });
+        });
+    </script>
+}

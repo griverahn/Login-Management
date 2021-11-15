@@ -1,0 +1,74 @@
+﻿@model LoginManagemet.DataContext.DTOs.RoleAccessDTO
+
+@{
+    ViewBag.Title = "Add New User";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Add", "Role", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <hr />
+    <div class="form-group">
+        @Html.LabelFor(m => m.LevelName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.LevelName, new { @class = "form-control" })
+            <span asp-validation-for="LevelName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.LevelOptionId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.LevelOptionId, new { @class = "form-control" })
+            <span asp-validation-for="LevelOptionId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.menuAccessItems, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(
+               model => model.menuAccessItems,
+               new SelectList(
+                      ViewBag.MenuOptions, "Value", "Text"),
+                         new
+                         {
+                             @style = "width: 280px",
+                             multiple = ""
+                         })
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Add" asp-action="AddUser" asp-controller="User" />
+        <input type="submit" class="btn btn-danger" value="Cancel" asp-action="Index" asp-controller="User" />
+    </div>
+}
+
+@section Scripts {
+    <script src="~/js/bundles.min.js"></script>
+    <script src="~/js/site.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery/dist/jqueryvalidate.js"></script>
+
+    <script>
+        $("#UserRoles").chosen();
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#show_hide_password a").on('click', function (event) {
+                event.preventDefault();
+                if ($('#show_hide_password input').attr("type") == "text") {
+                    $('#show_hide_password input').attr('type', 'password');
+                    $('#show_hide_password i').addClass("fa-eye-slash");
+                    $('#show_hide_password i').removeClass("fa-eye");
+                } else if ($('#show_hide_password input').attr("type") == "password") {
+                    $('#show_hide_password input').attr('type', 'text');
+                    $('#show_hide_password i').removeClass("fa-eye-slash");
+                    $('#show_hide_password i').addClass("fa-eye");
+                }
+            });
+        });
+    </script>
+}
